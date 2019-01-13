@@ -52,8 +52,8 @@ public class LevelController : MonoBehaviour {
 			platform.Build (destroyBoundary, spawnBoundary, false);
 		} else {
 			SpriteRenderer lpsr = LastPlatform ().GetComponent<SpriteRenderer> ();
-			float width = Random.Range (16, 64);
-			platform.Build (lpsr.bounds.max.x + 4, lpsr.bounds.max.x + 4 + width, true);
+			float width = Random.Range (1, 64);
+			platform.Build (lpsr.bounds.max.x + 5, lpsr.bounds.max.x + 5 + width, true);
 		}
 		platform.SetSpeed (speed);
 		platforms.Add (container);
