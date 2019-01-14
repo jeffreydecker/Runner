@@ -32,7 +32,7 @@ public class JumpController : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		rb2d = gameObject.GetComponent<Rigidbody2D>();
+		rb2d = gameObject.GetComponentInParent<Rigidbody2D>();
 	}
 	
 	// Update is called once per frame
@@ -50,21 +50,13 @@ public class JumpController : MonoBehaviour {
 		maxHeight = Mathf.Max (maxHeight, transform.position.y);
 	}
 
-	void OnCollisionEnter2D(Collision2D other) {
+	void OnTriggerEnter2D(Collider2D collision) {
 		isGrounded = true;
 		canDoubleJump = false;
  		ShowAndClearJumpHeight ();
-
-		ContactPoint2D cp = other.GetContact (0);
-		if (Mathf.Abs(transform.position.x - cp.point.x) > 0.1f) {
-			Debug.LogError ("Player should be dead!");
-		}
 	}
 
-	void OnCollisionStay2D() {
-	}
-
-	void OnCollisionExit2D(Collision2D other) {
+	void OnTriggerExit2D (Collider2D collision) {
 		isGrounded = false;
 	}
 

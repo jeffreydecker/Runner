@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class LevelController : MonoBehaviour {
 
+	#region Public Vars
+
 	public GameObject platformRes;
 
 	public float speed = 7;
+
+	#endregion
+
+	#region Private Vars
 
 	// Gather screen properties
 	Camera cam;
@@ -19,6 +25,8 @@ public class LevelController : MonoBehaviour {
 
 	// List of active platform containers
 	List<GameObject> platforms = new List<GameObject> ();
+
+	#endregion
 
 	// Use this for initialization
 	void Start () {
@@ -70,7 +78,15 @@ public class LevelController : MonoBehaviour {
 	GameObject FirstPlatform () {
 		return platforms [0];
 	}
+
 	GameObject LastPlatform () {
 		return platforms [platforms.Count - 1];
+	}
+
+	public void HandlePlayerDeath () {
+		foreach (GameObject platform in platforms) {
+			PlatformController pCon = platform.GetComponent<PlatformController> ();
+			pCon.SetSpeed (0);
+		}
 	}
 }

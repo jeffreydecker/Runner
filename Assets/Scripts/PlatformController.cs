@@ -85,7 +85,6 @@ public class PlatformController : MonoBehaviour {
 			float obstacleX = Random.Range (obstMinX, obstMaxX);
 			
 			int obstacleIndex = Random.Range (0, obstacleResources.Count);
-			Debug.LogWarning ("Obstacle Index: " + obstacleIndex + " - " + (obstacleResources.Count - 1));
 			GameObject res = obstacleResources [obstacleIndex];
 			PlacementProperties pp = res.GetComponent<PlacementProperties> ();
 
