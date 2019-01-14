@@ -12,24 +12,37 @@ using UnityEngine.UI;
 
 public class JumpController : MonoBehaviour {
 
+	#region Public Vars
+
 	public Text text;
+	public Text timeText;
 
 	/* TODO
 	 * - Reset can double jump when is grounded
 	 */
 
-	public float jumpForce = 300;
+	public float jumpForce = 350;
 
 	public bool isGrounded = false;
 	
 	public bool canDoubleJump = false;
 
+	#endregion
+
+	#region Private Vars
+
+	// Jump Height Tracking
 	float groundedHeight = float.MaxValue;
 	float maxHeight = float.MinValue;
 
-	// Refs
+	// Air Time Tracking
+	float jumpTime;
+
+	// Quick Refs
 	Rigidbody2D rb2d;
-	
+
+	#endregion
+
 	// Use this for initialization
 	void Start () {
 		rb2d = gameObject.GetComponentInParent<Rigidbody2D>();
@@ -42,6 +55,9 @@ public class JumpController : MonoBehaviour {
 				canDoubleJump = isGrounded;
 				rb2d.velocity = new Vector2();
 				rb2d.AddRelativeForce (Vector2.up * jumpForce);
+				if (isGrounded) {
+					jumpTime = Time.time;
+				}
 			}
 		}
 	}
@@ -52,8 +68,9 @@ public class JumpController : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D collision) {
 		isGrounded = true;
-		canDoubleJump = false;
+		canDoubleJump = true;
  		ShowAndClearJumpHeight ();
+		ShowAndClearJumpTime ();
 	}
 
 	void OnTriggerExit2D (Collider2D collision) {
@@ -65,5 +82,10 @@ public class JumpController : MonoBehaviour {
 		text.text = "" + jumpHeight;
 		maxHeight = float.MinValue;
 		groundedHeight = transform.position.y;
+	}
+
+	void ShowAndClearJumpTime() {
+		float airTime = Time.time - jumpTime;
+		timeText.text = "" + airTime;
 	}
 }
