@@ -40,12 +40,14 @@ public class JumpController : MonoBehaviour {
 
 	// Quick Refs
 	Rigidbody2D rb2d;
+	SpriteRenderer spriteRen;
 
 	#endregion
 
 	// Use this for initialization
 	void Start () {
 		rb2d = gameObject.GetComponentInParent<Rigidbody2D>();
+		spriteRen = gameObject.GetComponentInParent<SpriteRenderer>();
 	}
 	
 	// Update is called once per frame
@@ -60,6 +62,14 @@ public class JumpController : MonoBehaviour {
 				}
 			}
 		}
+
+		if (isGrounded) {
+			spriteRen.color = Color.green;
+		} else if (canDoubleJump) {
+			spriteRen.color = Color.yellow;
+		} else {
+			spriteRen.color = Color.red;
+		}
 	}
 
 	private void FixedUpdate () {
@@ -67,6 +77,7 @@ public class JumpController : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D collision) {
+
 		isGrounded = true;
 		canDoubleJump = true;
  		ShowAndClearJumpHeight ();
